@@ -27,6 +27,8 @@ import { IncrementadorComponent } from '../components/incrementador/incrementado
 import { GraficaDonaComponent } from '../components/grafica-dona/grafica-dona.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
 
 
 @NgModule({
@@ -40,7 +42,9 @@ import { RxjsComponent } from './rxjs/rxjs.component';
         GraficaDonaComponent,
         PromesasComponent,
         RxjsComponent,
-        ProfileComponent
+        ProfileComponent,
+        UsuariosComponent,
+        ModalUploadComponent,
     ],
     exports: [
         PagesComponent,
