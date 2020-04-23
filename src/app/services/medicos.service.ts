@@ -28,6 +28,12 @@ export class MedicosService {
     return this.http.get( url );
   }
 
+  buscarMedicoId( id: string ) {
+    const url = `${URL_SERVICIOS}/medico/${id}`;
+
+    return this.http.get( url );
+  }
+
   eliminarMedico( id: string ) {
     const url = `${URL_SERVICIOS}/medico/${id}?token=${this._usuarioService.token}`;
 
@@ -35,16 +41,31 @@ export class MedicosService {
   }
 
   crearMedico( medico: Medico ) {
-    const url = `${URL_SERVICIOS}/medico?token=${this._usuarioService.token}`;
+    let url = '';
 
-    return this.http.post( url, medico )
-                .pipe(
-                  map( (resp: any) => {
-                    Swal.fire( 'Médico creado', medico.nombre, 'success');
-                    // console.log(resp.body);
-                    return resp.body;
-                  })
-                );
-  }
+    if ( medico._id ) {
+      // Actualizando
+      url = `${URL_SERVICIOS}/medico/${medico._id}?token=${this._usuarioService.token}`;
+      return this.http.put( url, medico )
+                  .pipe(
+                    map( (resp: any) => {
+                      Swal.fire( 'Médico actualizado', medico.nombre, 'success' );
+                      return resp.medico;
+                    })
+                  );
+    } else {
+      // Creando
+      url = `${URL_SERVICIOS}/medico?token=${this._usuarioService.token}`;
+      return this.http.post( url, medico )
+                  .pipe(
+                    map( (resp: any) => {
+                      Swal.fire( 'Médico creado', medico.nombre, 'success');
+                      // console.log(resp.body);
+                      return resp.body;
+                    })
+                  );
+      }
+    }
+
 
 }

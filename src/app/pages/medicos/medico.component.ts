@@ -4,7 +4,8 @@ import { Hospital } from '../../models/hospital.model';
 import { HospitalService } from '../../services/hospital.service';
 import { Medico } from '../../models/medico.model';
 import { MedicosService } from '../../services/medicos.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';
 
 @Component({
   selector: 'app-medico',
@@ -19,7 +20,17 @@ export class MedicoComponent implements OnInit {
 
   constructor( public _hospitalService: HospitalService,
                public _medicoService: MedicosService,
-               public router: Router ) {
+               public router: Router,
+               public activatedRoute: ActivatedRoute,
+               public _modalUploadService: ModalUploadService) {
+
+                this.activatedRoute.params.subscribe( params => {
+                  const id = params['id'];
+
+                  if ( id !== 'nuevo' ) {
+                    this.buscarMedicoId( id );
+                  }
+                });
   }
 
   ngOnInit() {
@@ -27,6 +38,22 @@ export class MedicoComponent implements OnInit {
         .subscribe( (resp: any) => {
           // console.log(resp);
           this.hopitales = resp.hospitales;
+        });
+
+    this._modalUploadService.notificacion
+        .subscribe( resp => {
+          // console.log(resp);
+          this.medico.img = resp.medico.img;
+        });
+  }
+
+  buscarMedicoId( id: string ) {
+    this._medicoService.buscarMedicoId( id )
+        .subscribe( (resp: any) => {
+          console.log(resp);
+          this.medico = resp.medico;
+          this.medico.hospital = resp.medico.hospital._id;
+          this.cambioHospital( this.medico.hospital );
         });
   }
 
@@ -45,13 +72,17 @@ export class MedicoComponent implements OnInit {
         });
   }
 
-  cambioHospital( id ) {
+  cambioHospital( id: string ) {
     // console.log( id );
     this._hospitalService.obtenerHospital( id )
         .subscribe( resp => {
           // console.log(resp);
           this.hospital = resp;
         });
+  }
+
+  cambiarFoto() {
+    this._modalUploadService.mostrarModal( 'medicos', this.medico._id );
   }
 
 }
