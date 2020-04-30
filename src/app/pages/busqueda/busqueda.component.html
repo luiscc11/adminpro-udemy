@@ -1,0 +1,63 @@
+<div class="row">
+
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Usuarios</h4>
+                <p *ngIf="usuarios.length === 0">No se encontraron usuarios con el término de busqueda: <b>{{ termino }}</b></p>
+                <table *ngIf="usuarios.length !== 0" class="table table-hover">
+                    <tbody>
+                        <tr *ngFor="let usuario of usuarios">
+                            <td><img [src]="usuario.img | imagen" class="img-50 img-circle pointer"></td>
+                            <td>{{ usuario.nombre }}</td>
+                            <td>
+                                <button class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Médicos</h4>
+                <p *ngIf="medicos.length === 0">No se encontraron médicos con el término de busqueda: <b>{{ termino }}</b></p>
+                <table *ngIf="medicos.length !== 0" class="table table-hover">
+                    <tbody>
+                        <tr *ngFor="let medico of medicos">
+                            <td><img [src]="medico.img | imagen:'medico'" class="img-50 img-circle pointer"></td>
+                            <td>{{ medico.nombre }}</td>
+                            <td>
+                                <button [routerLink]="['/medico', medico._id]" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Hospitales</h4>
+                <p *ngIf="hospitales.length === 0">No se encontraron hospitales con el término de busqueda: <b>{{ termino }}</b></p>
+                <table *ngIf="hospitales.length !== 0" class="table table-hover">
+                    <tbody>
+                        <tr *ngFor="let hospital of hospitales">
+                            <td><img [src]="hospital.img | imagen:'hospital'" class="img-50 img-circle pointer"></td>
+                            <td>{{ hospital.nombre }}</td>
+                            <td>
+                                <button class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

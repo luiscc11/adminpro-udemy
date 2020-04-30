@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MedicosService } from '../../services/medicos.service';
 import { Medico } from '../../models/medico.model';
 import Swal from 'sweetalert2';
+import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';
 
 @Component({
   selector: 'app-medicos',
